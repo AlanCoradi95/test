@@ -26,8 +26,8 @@
                 <td class="whitespace-nowrap px-6 py-4">{{item.title}}</td>
                 <td class="whitespace-nowrap px-6 py-4">{{item.director}}</td>
                 <td class="whitespace-nowrap px-6 py-4">{{item.year}}</td>
-                <td><button routerLink="/movie/" [queryParams]="{ mode: 'UPD', id: item.id}">Editar</button></td>
-                <td><button (click)="deleteMovie(item.id)">Eliminar</button></td>
+                <td><button class="border rounded-lg p-2 bg-sky-400 font-normal" routerLink="/movie/" [queryParams]="{ mode: 'UPD', id: item.id}">Editar</button></td>
+                <td><button class="border rounded-lg p-2 bg-rose-500 font-normal" (click)="deleteMovie(item.id)">Eliminar</button></td>
               </tr>
             }
           </tbody>

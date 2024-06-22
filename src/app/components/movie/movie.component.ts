@@ -2,7 +2,7 @@ import { NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Movie } from '../../models/movie';
 import { map } from 'rxjs';
 
@@ -12,6 +12,7 @@ import { map } from 'rxjs';
   imports: [HttpClientModule,
     ReactiveFormsModule,
     NgFor,
+    RouterModule,
   ],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.css'
@@ -23,11 +24,13 @@ export class MovieComponent implements OnInit{
   aMovie!: Movie;
   movieForm!: FormGroup;
   aux!: any[];
+  titulo!: string;
 
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient,
     private formBuilder: FormBuilder,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,9 @@ export class MovieComponent implements OnInit{
 
     if (this.mode == 'UPD'){
       this.getMovieById();
+      this.titulo = 'MODIFICAR PELÍCULA'
+    }else{
+      this.titulo = 'NUEVA PELÍCULA'
     }
 
     this.movieForm = this.formBuilder.group({
@@ -65,14 +71,32 @@ export class MovieComponent implements OnInit{
     })
   }
   
-  public createMovie(){    
+  public submitMovie(){    
     
-    this.http.post('http://localhost:3000/movies/',this.movieForm.value).subscribe({
-      next: (res) => {console.log('Movie creada con éxito.')},
-      
-      error: (err) => {console.error('Error al crear Movie',err)},
-
-      complete: () => {console.log('createMovie complete')}
-    })
+    console.log(`${this.id} - ${this.mode}`)
+    
+    if (this.mode == 'INS'){
+      this.http.post('http://localhost:3000/movies/',this.movieForm.value).subscribe({
+        next: (res) => {console.log('Movie creada con éxito.')},
+        
+        error: (err) => {console.error('Error al crear Movie',err)},
+  
+        complete: () => {
+          console.log('createMovie complete');
+          this.router.navigate(['/all-movies']); 
+        }
+      })
+    }else{
+      this.http.put(`http://localhost:3000/movies/${this.id}`,this.movieForm.value).subscribe({
+        next: (res) => {console.log('Movie actualizada con éxito.')},
+        
+        error: (err) => {console.error('Error al actualizar Movie',err)},
+  
+        complete: () => {
+          console.log('submitMovie complete');
+          this.router.navigate(['/all-movies']); 
+        }
+      })
+    }
   }
 }

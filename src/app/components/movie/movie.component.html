@@ -6,20 +6,26 @@
     {{item.year}}
 }
 -->
-@if (mode=='INS'){
-    <h1>AGREGAR NUEVA PELI</h1>
-}@else{
-    <h1>MODIFICAR PELI</h1>
-}
-<form [formGroup]="movieForm" (ngSubmit)="createMovie()">
-    <div>
-        <input type="text" id="title" name="title" placeholder="TITLE" formControlName="title">    
+<div class="container">
+    <div class="mx-auto text-center">
+        <h1 class="font-mono text-2xl underline">{{this.titulo}}</h1>
     </div>
-    <div>
-        <input type="text" id="director" name="director" placeholder="DIRECTOR" formControlName="director">    
-    </div>
-    <div>
-        <input type="number" id="year" name="year" placeholder="YEAR" formControlName="year">            
-    </div>
-    <button type="submit">OK</button>
-</form>
+    <div class="mx-auto text-center border rounded-md w-80 p-4 my-2 shadow-xl">
+
+        <form [formGroup]="movieForm" (ngSubmit)="submitMovie()">
+            <div>
+                <label for="title">Título</label><br>
+                <input class="border rounded-xl p-1" type="text" id="title" name="title" placeholder="Título" formControlName="title">    
+            </div>
+            <div class="my-2">
+                <label for="director">Director</label><br>
+                <input class="border rounded-xl p-1" type="text" id="director" name="director" placeholder="Director" formControlName="director">    
+            </div>
+            <div class="my-2">
+                <label for="year">Año</label><br>
+                <input class="border rounded-xl p-1" type="number" id="year" name="year" placeholder="Año" formControlName="year">            
+            </div>
+            <button class="border rounded-md bg-lime-400 h-12 w-12 shadow-md" type="submit">OK</button>
+        </form>
+    </div>    
+</div>
