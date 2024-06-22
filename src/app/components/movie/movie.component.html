@@ -1,0 +1,25 @@
+<!--
+@for (item of movie; track item.id) {
+    {{item.id}}
+    {{item.title}}
+    {{item.director}}
+    {{item.year}}
+}
+-->
+@if (mode=='INS'){
+    <h1>AGREGAR NUEVA PELI</h1>
+}@else{
+    <h1>MODIFICAR PELI</h1>
+}
+<form [formGroup]="movieForm" (ngSubmit)="createMovie()">
+    <div>
+        <input type="text" id="title" name="title" placeholder="TITLE" formControlName="title">    
+    </div>
+    <div>
+        <input type="text" id="director" name="director" placeholder="DIRECTOR" formControlName="director">    
+    </div>
+    <div>
+        <input type="number" id="year" name="year" placeholder="YEAR" formControlName="year">            
+    </div>
+    <button type="submit">OK</button>
+</form>
